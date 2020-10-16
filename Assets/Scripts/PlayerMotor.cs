@@ -24,6 +24,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void trySetState(playerState setValue)
     {
+        Debug.Log(setValue);
         newState = true;
         state = setValue;
         

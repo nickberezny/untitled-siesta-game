@@ -18,12 +18,20 @@ public class Health : MonoBehaviour
         health += change;
         if (health > _maxHealth) health = _maxHealth;
 
-        if(health <= 0)
+        //Debug.Log("New health:" + health);
+
+        if (health <= 0)
         {
-            //die
+            //die, reset...
+            PlayerManager.Instance.spawnPlayer();
+            health = _maxHealth;
+
         }
 
         //update health bar
 
     }
+
+
 }
+

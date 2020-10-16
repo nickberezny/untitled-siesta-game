@@ -16,11 +16,13 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        
         keys[0] = Input.GetKeyDown("a");
         keys[1] = Input.GetKeyDown("s");
         keys[2] = Input.GetKeyDown("d");
         keys[3] = Input.GetKeyDown("f");
 
+        
         switchKey = Input.GetKeyDown("space");
         timeKey = Input.GetKeyDown("enter");
 
@@ -33,7 +35,7 @@ public class InputManager : MonoBehaviour
         {
             //switch time scale
         }
-
+        
         if (keys[order[getOrder(_index, _dir)]] == true)
         {
             //move in dir
