@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     private int[] order = { 0, 1, 2, 3 };
     private int _dir = 1;
     private int _index = 0;
+    private Vector2 _orientation;
 
     void Update()
     {

@@ -436,7 +436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1643405375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5, y: -2.15, z: 0}
+  m_LocalPosition: {x: 2.93, y: -2.15, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -502,6 +502,7 @@ GameObject:
   - component: {fileID: 1765824709}
   - component: {fileID: 1765824708}
   - component: {fileID: 1765824707}
+  - component: {fileID: 1765824710}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -730,6 +731,20 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1765824710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765824705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aba42b62626bb3438ea7c46c752c3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1765824709}
+  player: {fileID: 1643405375}
 --- !u!1 &1768144580
 GameObject:
   m_ObjectHideFlags: 0
