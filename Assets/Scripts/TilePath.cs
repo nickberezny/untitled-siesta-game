@@ -8,37 +8,27 @@ public class TilePath : MonoBehaviour
     [SerializeField] Tilemap tilemap;
     [SerializeField] GameObject player;
 
-    private List<Vector3> availablePlaces;
+    private List<Vector3> tiles;
 
     private void Awake()
     {
-        availablePlaces = new List<Vector3>();
+        tiles = new List<Vector3>();
 
         for (int i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
         {
             for(int j = tilemap.cellBounds.yMin; j < tilemap.cellBounds.yMax; j++)
             {
-                Vector3Int localPlace = (new Vector3Int(i, j, (int)tilemap.transform.position.y));
-                Vector3 place = tilemap.CellToWorld(localPlace);
-                if (tilemap.HasTile(localPlace))
+                Vector3Int localPos = (new Vector3Int(i, j, (int)tilemap.transform.position.y));
+                Vector3 pos = tilemap.CellToWorld(localPos);
+                if (tilemap.HasTile(localPos))
                 {
                     //Tile at "place"
-                    //availablePlaces.Add(place);
-                    Debug.Log(place);
-                }
-                else
-                {
-                    //No tile at "place"
+                    tiles.Add(pos);
+                    Debug.Log(pos);
                 }
             }
         }
 
-        /*
-        TileBase[] allTiles = tilemap.GetTilesBlock(tilemap.cellBounds);
-        foreach(TileBase tile in allTiles)
-        {
 
-        }
-        */
     }
 }

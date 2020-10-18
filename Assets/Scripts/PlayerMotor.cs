@@ -4,72 +4,83 @@ using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
+
     [SerializeField] float speed;
-    [SerializeField] float displacementPerClick;
+
+    public Vector2 _direction;
+    public Vector2 _limits;
 
     private GameObject _player;
-    private int _dir = 1;
-    private bool newState = false;
-
-    private const float dt = 0.01f;
+    private float _lineProgress;
     
-
-    public playerState state { get; private set;}
-
 
     private void Awake()
     {
         _player = this.gameObject;
+
+        Path.Instance.reachedNewDestination(1);
+        _lineProgress = 0f;
+
     }
 
-    public void trySetState(playerState setValue)
+
+    public void movePlayer(Vector2 dir, bool fwd)
     {
-        Debug.Log(setValue);
-        newState = true;
-        state = setValue;
-        
-        if(state == playerState.moving)
+
+        //Debug.Log("Move player: " + Vector2.Distance(_direction, dir));
+
+        if (Vector2.Distance(new Vector2(Mathf.Abs(_direction.x), Mathf.Abs(_direction.y)), dir) < 0.1)
         {
-            StopAllCoroutines();
-            StartCoroutine(movePlayer(_dir, displacementPerClick));
+            
+            if ((_lineProgress > 1.0f & sumVector(_direction) > 0 & fwd ) || ( _lineProgress > 1.0f & sumVector(_direction)<0 & !fwd ))
+            {
+                transitionLines(true);
+                _lineProgress = 0f;
+            }
+            else if((_lineProgress < 0.0f & sumVector(_direction) < 0 & fwd) || (_lineProgress < 0.0f & sumVector(_direction) > 0 & !fwd))
+            {
+                transitionLines(false);
+                _lineProgress = 0f;
+            }
+            else if (fwd)
+            {
+                //move fwd
+                move(1);
+                Debug.Log("move fwd");
+            }
+            else if (!fwd)
+            {
+                //move bkwd
+                Debug.Log("Move bckwd");
+                move(-1);
+            }
+        }
+        else
+        {
+            //check for another branch...
         }
     }
 
-    public void setDir(int dir)
+    private void transitionLines(bool fwd)
     {
-        _dir = dir;
+        if (fwd) Path.Instance.reachedNewDestination(1);
+        else Path.Instance.reachedNewDestination(-1);
     }
 
-    public void switchBranch()
+    private void move(int fwd)
     {
-
-    }
-
-   
-    private IEnumerator movePlayer(int dir, float displacement)
-    {
-        float totalDisplacement = 0f;
-        float dx = speed * dt;
-        while (Mathf.Abs(totalDisplacement) < displacement)
-        {
-            totalDisplacement += dir*dx;
-            _player.transform.position = _player.transform.position + new Vector3(dir * dx, 0f, 0f);
-            yield return new WaitForSeconds(dt);
-
-        }
         
+        _player.transform.position = _player.transform.position + new Vector3(fwd*Mathf.Abs(_direction.x * speed), fwd* Mathf.Abs(_direction.y) * speed, 0f);
+        _lineProgress = sumVector((Vector2.Scale(new Vector2(_player.transform.position.x, _player.transform.position.y), _direction) - _limits.x *  _direction)) / (_limits.y *  _direction - _limits.x * _direction).magnitude;
+        Debug.Log(_lineProgress);
     }
 
-
-    public enum playerState
+    private float sumVector(Vector2 v)
     {
-        notMoving,
-        moving,
-        preparingToReverse,
-        reversing,
-        waiting
-
+        Debug.Log(v.x +","+ v.y);
+        return v.x + v.y; 
     }
+
 
 
 
