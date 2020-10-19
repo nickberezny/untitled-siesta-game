@@ -2,90 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Line
+{
+    public int y;
+    public int x1;
+    public int x2;
+}
 
 public class Path : MonoBehaviour
 {
-    public static Path Instance { private set; get; }
 
-    [SerializeField] PlayerMotor _playerMotor;
-
-    private List<Vector3> positions;
-
-    private int currentIndex = 0;
-    private Vector3 nextPosition;
-    private Vector3 direction;
+    private List<Line> lines;
+    
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-            return;
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(this);
-        }
+        lines = new List<Line>();
+        int i = 0;
+        Line temp = new Line();
 
-        positions = new List<Vector3>();
-        foreach(Transform t in GetComponentsInChildren<Transform>())
+        foreach (Transform t in GetComponentsInChildren<Transform>())
         {
-            if(t.gameObject != this.gameObject)
+            if (t.gameObject != this.gameObject)
             {
-                //Debug.Log(t.position);
-                positions.Add(t.position);
-                
-            } 
+                if (i == 1)
+                {
+                    if(t.position.x > temp.x1) temp.x2 = Mathf.RoundToInt(t.position.x);
+                    else
+                    {
+                        temp.x2 = temp.x1;
+                        temp.x1 = Mathf.RoundToInt(t.position.x);
+                    }
+                    lines.Add(temp);
+                    temp = new Line();
+                    i = 0;
+                }
+                else
+                {
+                    temp.x1 = Mathf.RoundToInt(t.position.x);
+                    temp.y = Mathf.RoundToInt(t.position.y);
+                    i = 1;
+                }
+                    
+
+            }
         }
 
-        //reachedNewDestination();
     }
 
-    public void reachedNewDestination(int step)
+    public bool isPositionInBound(float x, int y)
     {
-        Debug.Log(currentIndex + step + "," + positions.Count);
-        if (currentIndex + step == positions.Count)
+        foreach(Line line in lines)
         {
-            Debug.Log("win");
-        }
-        else if(currentIndex + step <= 0)
-        {
-            Debug.Log("at start");
-        }
-        else 
-        {
-            getNewLine(currentIndex + step);
-            //animate to new position, wait
-            //
+            if(line.y == y)
+            {
+                if (x <= line.x2 && x >= line.x1) return true;
+            }
         }
 
+        return false;
     }
 
-    private void getNewLine(int index)
+    public bool isBranchReachable(float x, int y, int dir)
     {
-        Debug.Log(index);
-        if (index >= positions.Count) return;
-
-        nextPosition = positions[index];
-        currentIndex = index;
-
-        direction = (positions[index] - positions[index - 1]).normalized;
-        _playerMotor._direction = direction;
-        _playerMotor._limits = new Vector2(Vector3.Dot(positions[index - 1] , absVector3(direction)), Vector3.Dot(positions[index] , absVector3(direction)));
-
-        //Debug.Log(direction);
-        //Debug.Log(_playerMotor._limits);
-
+        return isPositionInBound(x, y + dir);
     }
-
-    private Vector3 absVector3(Vector3 v)
-    {
-        return new Vector3(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
-    }
-
- 
-
 
 
 

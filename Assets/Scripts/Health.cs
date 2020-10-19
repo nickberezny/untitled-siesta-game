@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             //die, reset...
-            PlayerManager.Instance.spawnPlayer();
+            //PlayerManager.Instance.spawnPlayer();
             health = _maxHealth;
 
         }
