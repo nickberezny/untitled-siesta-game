@@ -68,6 +68,27 @@ public class Path : MonoBehaviour
         return isPositionInBound(x, y + dir);
     }
 
+    public int nearestBranchBelow(float x, int y)
+    {
+        int nearest = -9999;
+        foreach (Line line in lines)
+        {
+            Debug.Log(line.y + "," + nearest);
+            if (line.y < y && x <= line.x2 && x >= line.x1)
+            {
+                if(y - line.y < y - nearest)
+                {
+                    nearest = line.y;
+                }
+            }
+
+        }
+
+        if (nearest == -9999) nearest = y;
+
+        return nearest - y;
+    }
+
 
 
 }

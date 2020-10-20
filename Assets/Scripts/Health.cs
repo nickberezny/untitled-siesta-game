@@ -5,12 +5,19 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] int health = 100;
+    [SerializeField] HealthBar healthBar;
 
     private int _maxHealth;
 
     public void Awake()
     {
         _maxHealth = health;
+        
+    }
+
+    void Start()
+    {
+        StartCoroutine(changeHealth(1f));
     }
 
     public void changeHealth(int change)
@@ -28,8 +35,17 @@ public class Health : MonoBehaviour
 
         }
 
-        //update health bar
+        healthBar.barDisplay = health / 100f; ;
 
+    }
+
+    IEnumerator changeHealth(float dt)
+    {
+        while(health > 0)
+        {
+            changeHealth(-1);
+            yield return new WaitForSeconds(dt);
+        }
     }
 
 
