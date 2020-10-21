@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] int healthDecrement;
 
+    private float fallAccel = 0.002f;
+
     protected virtual void Awake()
     {
         Debug.Log("enemy awake");
@@ -16,10 +18,30 @@ public class Enemy : MonoBehaviour
         Debug.Log("Collision w/ " + collision.gameObject.name);
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<Health>().changeHealth(-healthDecrement);
+            //collision.gameObject.GetComponent<Health>().changeHealth(-healthDecrement);
             collision.gameObject.GetComponent<Player>().fallDown();
             //set animation
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            deleteObject();
+            StartCoroutine(fallDown());
         }
+    }
+
+    protected virtual void deleteObject()
+    {
+        return;
+    }
+
+    IEnumerator fallDown()
+    {
+        float g = 0;
+
+        while (transform.position.y > -20)
+        {
+            g += fallAccel;
+            transform.position = transform.position - new Vector3(0, g, 0);
+            yield return new WaitForSeconds(0.01f);
+        }
+
     }
 }

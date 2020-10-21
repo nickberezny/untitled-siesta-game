@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.PlayerLoop;
 
 public class Player : MonoBehaviour
 {
@@ -10,8 +10,11 @@ public class Player : MonoBehaviour
     [SerializeField] float rotSpeed;
 
     private float y_offset = 0.4f;
-    private float fallAccel = 0.01f;
-    private bool input = true;
+    private float fallAccel = 0.001f;
+    public bool input = false;
+    private bool turbo = false;
+    private bool moveLeft;
+    private bool moveRight;
 
     private void Update()
     {
@@ -22,14 +25,41 @@ public class Player : MonoBehaviour
             if (Input.GetKey("right") || Input.GetKey("d")) move(1);
             if (Input.GetKey("left") || Input.GetKey("a")) move(-1);
 
-            if (Input.GetKey("space"))
+            if (Input.GetKeyDown("space"))
             {
                 //turbo mode
+                if (turbo)
+                {
+                    turbo = false;
+                    Time.timeScale = 1;
+                    speed = speed / 3;
+                }
+                else
+                {
+                    turbo = true;
+                    speed = speed * 3;
+                    Time.timeScale = 3;
+                }
             }
         }
         
        
     }
+
+    private void FixedUpdate()
+    {
+        if (moveRight)
+        {
+            transform.position = transform.position + new Vector3(speed, 0, 0);
+            moveRight = false;
+        }
+        if (moveLeft)
+        {
+            transform.position = transform.position + new Vector3(-speed, 0, 0);
+            moveLeft = false;
+        }
+    }
+
 
     public void fallDown()
     {
@@ -42,7 +72,8 @@ public class Player : MonoBehaviour
        }
        else
        {
-           Debug.Log("Dead!");
+            StartCoroutine(fallDown(-10));
+            Debug.Log("Dead!");
        }
     }
 
@@ -63,7 +94,9 @@ public class Player : MonoBehaviour
     {
         if(path.isPositionInBound(transform.position.x + dir*speed, Mathf.RoundToInt(transform.position.y + y_offset)))
         {
-            transform.position = transform.position + new Vector3(dir * speed, 0, 0);
+            //transform.position = transform.position + new Vector3(dir * speed, 0, 0);
+            if(dir == 1) moveRight = true;
+            if (dir == -1) moveLeft = true;
         }
 
     }
@@ -77,7 +110,7 @@ public class Player : MonoBehaviour
         {
             g += fallAccel;
             transform.position = transform.position - new Vector3(0, g, 0);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
         }
 
         transform.position = new Vector3(transform.position.x, y, transform.position.z);

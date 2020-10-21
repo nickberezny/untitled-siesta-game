@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -6,8 +7,11 @@ public class Spider : Enemy
 {
     [SerializeField] float speed;
     [SerializeField] float downSpeed;
+    [SerializeField] GameObject web;
+
     private List<float> limits = new List<float>();
     private float direction = 1;
+    private bool deleted = false;
 
     protected override void Awake()
     {
@@ -26,6 +30,10 @@ public class Spider : Enemy
 
         Debug.Log(limits[0] + "," + limits[1]);
 
+    }protected override void deleteObject()
+    {
+        Destroy(web);
+        deleted = true;
     }
 
     private void FixedUpdate()
@@ -44,6 +52,12 @@ public class Spider : Enemy
             direction = 1;
         }
 
+        if(!deleted)
+        {
+            web.transform.localScale = new Vector3(0.01f, (limits[1] - transform.position.y), 0.01f);
+            web.transform.position = new Vector3(web.transform.position.x, -0.1f + (limits[1] + (transform.position.y - limits[1])) / 2, web.transform.position.z);
+
+        }
 
     }
 
