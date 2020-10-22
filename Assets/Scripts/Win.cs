@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Win : MonoBehaviour
 {
+    [SerializeField] string NextLevel;
+    [SerializeField] LevelManager levelManager;
     void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Collision w/ " + collision.gameObject.name);
@@ -12,6 +14,7 @@ public class Win : MonoBehaviour
             //win
             //animation
             //next level
+            levelManager.nextLevel(NextLevel);
         }
     }
 }

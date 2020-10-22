@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
         
     }
 
-    void Start()
+    public void StartGame()
     {
         StartCoroutine(changeHealth(1f));
     }

@@ -5,8 +5,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] int healthDecrement;
+    [SerializeField] AudioSource audioSource;
 
     private float fallAccel = 0.002f;
+    public bool falling = false;
 
     protected virtual void Awake()
     {
@@ -22,8 +24,9 @@ public class Enemy : MonoBehaviour
             collision.gameObject.GetComponent<Player>().fallDown();
             //set animation
             //Destroy(this.gameObject);
-            deleteObject();
-            StartCoroutine(fallDown());
+            audioSource.Play();
+            //deleteObject();
+            //StartCoroutine(fallDown());
         }
     }
 
@@ -34,6 +37,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator fallDown()
     {
+        falling = true;
         float g = 0;
 
         while (transform.position.y > -20)

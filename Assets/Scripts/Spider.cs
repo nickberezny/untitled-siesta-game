@@ -20,7 +20,7 @@ public class Spider : Enemy
         base.Awake();
         foreach(Transform t in GetComponentsInChildren<Transform>())
         {
-            if(t.gameObject != this)
+            if(t.gameObject != this.gameObject)
             {
                 limits.Add(t.position.y);
             }
@@ -55,7 +55,7 @@ public class Spider : Enemy
         if(!deleted)
         {
             web.transform.localScale = new Vector3(0.01f, (limits[1] - transform.position.y), 0.01f);
-            web.transform.position = new Vector3(web.transform.position.x, -0.1f + (limits[1] + (transform.position.y - limits[1])) / 2, web.transform.position.z);
+            web.transform.position = new Vector3(web.transform.position.x, limits[1] + ((transform.position.y - limits[1])/2), web.transform.position.z);
 
         }
 

@@ -6,14 +6,22 @@ using UnityEngine;
  public class HealthBar : MonoBehaviour
 {
     public float barDisplay; //current progress
-    [SerializeField] Vector2 pos = new Vector2(20, 40);
-    [SerializeField] Vector2 size = new Vector2(60, 20);
+    //[SerializeField] Vector2 pos = new Vector2(20, 40);
+    //[SerializeField] Vector2 size = new Vector2(100, 30);
     [SerializeField] Texture2D emptyTex;
     [SerializeField] Texture2D fullTex;
     [SerializeField] AudioSource gameMusic;
 
+    private float w;
+    float h;
+
+
     void OnGUI()
     {
+        w = Screen.width;
+        h = Screen.height;
+        Vector2 size = new Vector2(w*4/5, 20);
+        Vector2 pos = new Vector2(w/10, h/20);
         //draw the background:
         GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
         GUI.Box(new Rect(0, 0, size.x, size.y), emptyTex);

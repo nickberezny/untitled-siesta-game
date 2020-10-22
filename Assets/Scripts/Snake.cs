@@ -36,12 +36,12 @@ public class Snake : Enemy
         if(direction == 1 && transform.position.x > limits[1])
         {
             direction = -1;
-            StartCoroutine(turnAround());
+            if(!falling) StartCoroutine(turnAround());
         }
         else if(direction == -1 && transform.position.x < limits[0])
         {
             direction = 1;
-            StartCoroutine(turnAround());
+            if (!falling) StartCoroutine(turnAround());
         }
 
     }

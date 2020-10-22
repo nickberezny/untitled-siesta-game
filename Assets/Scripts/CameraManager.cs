@@ -7,19 +7,25 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField] Camera camera;
     [SerializeField] GameObject player;
+    [SerializeField] Health health;
 
     private bool gameStart = false;
 
     private void Start()
     {
         //move camera to player
-        StartCoroutine(moveToPlayer());
-        
+
+        if (StaticClass.loaderName == "Restart")
+        {
+            camera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -20);
+            StartCoroutine(moveToPlayer());
+        }
+        else StartCoroutine(moveToPlayer());
     }
 
     void Update()
     {
-        if(gameStart) camera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, camera.transform.position.z);
+        if(gameStart && player.transform.position.y > -8) camera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, camera.transform.position.z);
     }
 
     IEnumerator moveToPlayer()
@@ -39,5 +45,6 @@ public class CameraManager : MonoBehaviour
         //start
         gameStart = true;
         player.GetComponent<Player>().input = true;
+        health.StartGame();
     }
 }
