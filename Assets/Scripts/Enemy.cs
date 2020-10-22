@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
             //set animation
             //Destroy(this.gameObject);
             audioSource.Play();
-            //deleteObject();
+            deleteObject();
             //StartCoroutine(fallDown());
         }
     }

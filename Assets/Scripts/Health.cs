@@ -5,19 +5,22 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] int health = 100;
+    [SerializeField] float healthDecayRate;
     [SerializeField] HealthBar healthBar;
 
     private int _maxHealth;
+    private Player player;
 
     public void Awake()
     {
         _maxHealth = health;
+        player = gameObject.GetComponent<Player>();
         
     }
 
     public void StartGame()
     {
-        StartCoroutine(changeHealth(1f));
+        StartCoroutine(changeHealth(healthDecayRate));
     }
 
     public void changeHealth(int change)
@@ -30,9 +33,7 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             //die, reset...
-            //PlayerManager.Instance.spawnPlayer();
-            health = _maxHealth;
-
+            player.forceDeath();
         }
 
         healthBar.barDisplay = health / 100f; ;

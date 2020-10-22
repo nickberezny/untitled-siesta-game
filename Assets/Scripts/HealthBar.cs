@@ -5,7 +5,7 @@ using UnityEngine;
 
  public class HealthBar : MonoBehaviour
 {
-    public float barDisplay; //current progress
+    public float barDisplay = 1; //current progress
     //[SerializeField] Vector2 pos = new Vector2(20, 40);
     //[SerializeField] Vector2 size = new Vector2(100, 30);
     [SerializeField] Texture2D emptyTex;
@@ -32,9 +32,8 @@ using UnityEngine;
         GUI.EndGroup();
         GUI.EndGroup();
 
-        if (barDisplay > 0.5) gameMusic.pitch = 1;
-        else if (barDisplay > 0.2) gameMusic.pitch = 0.95f;
-        else gameMusic.pitch = 0.75f;
+        //if (barDisplay > 0.15) gameMusic.pitch = 0.7f;
+        //else gameMusic.pitch = 0.6f;
       
     }
 

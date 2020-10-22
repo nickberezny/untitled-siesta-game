@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+
+    [SerializeField] string nextLevel;
+
     public void restartLevel()
     {
+        Scene scene = SceneManager.GetActiveScene();
         StaticClass.loaderName = "Restart";
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(scene.name);
     }
 
     public void quitGame()
@@ -16,9 +20,9 @@ public class LevelManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void nextLevel(string levelName)
+    public void loadNext()
     {
         StaticClass.loaderName = "Next";
-        SceneManager.LoadScene(levelName);
+        SceneManager.LoadScene(nextLevel);
     }
 }

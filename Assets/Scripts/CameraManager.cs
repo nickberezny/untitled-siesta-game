@@ -25,11 +25,16 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if(gameStart && player.transform.position.y > -8) camera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, camera.transform.position.z);
+        if(player)
+        {
+            if (gameStart && player.transform.position.y > -8) camera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, camera.transform.position.z);
+
+        }
     }
 
     IEnumerator moveToPlayer()
     {
+        yield return new WaitForSeconds(1f);
         Vector3 p = new Vector3(player.transform.position.x, player.transform.position.y, -20);
         Vector3 dir = (p - camera.transform.position);
         dir = dir.normalized;
@@ -37,8 +42,8 @@ public class CameraManager : MonoBehaviour
 
         while((p - camera.transform.position).magnitude > 0.1)
         {
-            Debug.Log((player.transform.position - camera.transform.position).magnitude);
-            camera.transform.position = camera.transform.position + dir/3; ///20;
+            //Debug.Log((player.transform.position - camera.transform.position).magnitude);
+            camera.transform.position = camera.transform.position + dir/7; ///20;
             yield return new WaitForSeconds(0.01f);
         }
 

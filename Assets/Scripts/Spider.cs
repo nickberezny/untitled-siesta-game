@@ -20,7 +20,7 @@ public class Spider : Enemy
         base.Awake();
         foreach(Transform t in GetComponentsInChildren<Transform>())
         {
-            if(t.gameObject != this.gameObject)
+            if(t.gameObject != this.gameObject && t.gameObject.tag != "web")
             {
                 limits.Add(t.position.y);
             }
@@ -28,13 +28,10 @@ public class Spider : Enemy
 
         limits.Sort();
 
-        Debug.Log(limits[0] + "," + limits[1]);
+        Debug.Log(name + "," + limits[0] + "," + limits[1]);
 
-    }protected override void deleteObject()
-    {
-        Destroy(web);
-        deleted = true;
     }
+
 
     private void FixedUpdate()
     {

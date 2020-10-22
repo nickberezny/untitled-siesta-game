@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 5703194785923203428}
   - component: {fileID: 5703194785923203427}
   - component: {fileID: 5703194785923203429}
-  - component: {fileID: 5703194785923203430}
   - component: {fileID: 5703194785923203431}
   - component: {fileID: 5703194785923203432}
+  - component: {fileID: 8881985670537711208}
   m_Layer: 0
-  m_Name: Snake
+  m_Name: Snail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,22 +104,6 @@ MonoBehaviour:
   audioSource: {fileID: 5703194785923203432}
   falling: 0
   speed: 0.01
---- !u!58 &5703194785923203430
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5703194785923203426}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.1
 --- !u!95 &5703194785923203431
 Animator:
   serializedVersion: 3
@@ -151,7 +135,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c09a70be9430f6c4183207a4f05d6509, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.52
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -235,6 +219,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!68 &8881985670537711208
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703194785923203426}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 0.31256628, y: 0.06866758}
+  - {x: 0.28792906, y: 0.1236405}
+  - {x: 0.2197671, y: 0.14856955}
+  - {x: 0.12704611, y: 0.012191229}
+  - {x: -0.0035529137, y: 0.1808948}
+  - {x: -0.23239899, y: 0.15475333}
+  - {x: -0.3742385, y: -0.1304684}
+  - {x: 0.13842058, y: -0.13717371}
+  - {x: 0.31688643, y: 0.06408976}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &5703194786064196708
 GameObject:
   m_ObjectHideFlags: 0

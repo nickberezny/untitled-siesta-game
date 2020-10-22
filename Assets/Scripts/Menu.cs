@@ -18,4 +18,10 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Level1");
     }
 
+    public void Instruction()
+    {
+        StaticClass.loaderName = "Main";
+        SceneManager.LoadScene("Controls");
+    }    
+
 }
